@@ -22,4 +22,9 @@ As we navigate through this presentation, we'll unravel intricate temporal trend
 
 Interesting note: there is a high chance for men to be killed in an unnatural causes like accident or suicide and most of women have natural death.
 
+![Image 4](./plots/Death_rate_by_manner_of_death_and_age.png)
+*A bar plot focusing on the how Deaths fluctuate throughout the manner_of_death and age*
+
+![Image 5](./plots/correlation_matrix.png)
+*correlation_matrix*
 
