@@ -70,46 +70,81 @@ raw_data.info()
 
 
 
-description["detail_age_type"]
-
+description["race"]
+raw_data['race']
 
 
 # =============================================================================
 # Data Visualization
 # =============================================================================
-raw_data.isnull().sum()/len(raw_data)*100
+
 
 
 
 # =============================================================================
-# PART 1 
+# PART 1 - Death rate by months and days of a week
+# =============================================================================
+
+dec_map = {int(key): value for key, value in description["day_of_week_of_death"].items()}
+raw_data['day_name'] = raw_data['day_of_week_of_death'].map(dec_map)
+
+# Sort the days of the week
+days_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Unknown']
+raw_data['day_name'] = pd.Categorical(raw_data['day_name'], categories=days_order, ordered=True)
+
+
+dec_map = {int(key): value for key, value in description["month_of_death"].items()}
+raw_data['month_of_death_name'] = raw_data['month_of_death'].map(dec_map)
+
+sns.countplot(x=raw_data['month_of_death_name'], hue=raw_data['day_name'])
+
+
+
+# =============================================================================
+# PART 2 - Death rate by race
 # =============================================================================
 
 
 
 
+race_map = {int(key): value for key, value in description["race"].items()}
+raw_data['race_description'] = raw_data['race'].map(race_map)
+
+# Use a color palette from seaborn
+sns.set_palette("pastel")
+
+# Bar plot for Temporal Trends by Day of the Week with sorted day names
+plt.figure(figsize=(12, 6))
+sns.set_style("whitegrid")  # Add grid lines
+df = raw_data.groupby('race_description')['sex'].count().sort_index().plot(kind='bar')
+
+# Labels and titles
+plt.title('Death Rate by Race', fontsize=16)
+plt.xlabel('Race', fontsize=14)
+plt.ylabel('Number of Death', fontsize=14)
+
+# Legend
+# plt.legend(['Race'], loc='upper right')
+
+# Data labels
+for index, value in enumerate(raw_data.groupby('race_description')['sex'].count().sort_index()):
+    plt.text(index, value + 1, str(value), ha='center', va='bottom')
+
+plt.grid(True)
+plt.show()
 
 
 
 
 
 
-
-
-
-
-
-# Graph 1
-month_name_mapping = {1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June', 7: 'July', 8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December'}
-raw_data['month_name'] = raw_data['MONTH_ID'].map(month_name_mapping)
-months_order = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-raw_data['month_name'] = pd.Categorical(raw_data['month_name'], categories=months_order, ordered=True)
 
 # Use a color palette from seaborn
 sns.set_palette("viridis")
 
 # Create the first subplot (top)
 plt.figure(figsize=(12, 12))
+
 plt.subplot(2, 1, 1)
 
 # Line plot for Temporal Trends by Months with sorted month names
