@@ -14,5 +14,12 @@ As we navigate through this presentation, we'll unravel intricate temporal trend
 
 
 ![Image 2](./plots/Death_rate_by_manner_of_death.png)
-*A bar plot focusing on the how Deaths fluctuate throughout the manner_of_death*
+*A pie plot focusing on distributaion of death throughout the manner_of_death*
+
+
+![Image 3](./plots/Death_rate_by_manner_of_death_and_sex.png)
+*A bar plot focusing on the how Deaths fluctuate throughout the manner_of_death and sex*
+
+Interesting note: there is a high chance for men to be killed in an unnatural causes like accident or suicide and most of women have natural death.
+
 

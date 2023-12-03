@@ -58,8 +58,8 @@ raw_data.info()
 #
 # month_of_death
 # day_of_week_of_death
-#
 # manner_of_death
+#
 # marital_status
 # detail_age_type
 # education_2003_revision
@@ -72,7 +72,7 @@ raw_data.info()
 
 
 description["manner_of_death"]
-raw_data['race']
+raw_data['detail_age_type']
 
 
 # =============================================================================
@@ -140,6 +140,16 @@ plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle
 # plt.legend(location_counts.index, title='Locations', loc='upper right')
 
 plt.show()
+
+
+
+# =============================================================================
+# PART 2 - Death rate by manner_of_death and sex
+# =============================================================================
+
+
+
+sns.countplot(x=raw_data['manner_of_death_name'], hue=raw_data['sex'])
 
 
 
