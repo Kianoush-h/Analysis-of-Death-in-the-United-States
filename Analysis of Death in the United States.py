@@ -42,15 +42,6 @@ categorical_stats = raw_data.describe(include=['object'])
 
 raw_data.info()
 
-# raw_data.dropna(inplace=True)
-
-# raw_data['ORDERDATE'] = pd.to_datetime(raw_data['ORDERDATE'], infer_datetime_format=True)
-
-
-
-# raw_data['year'] = raw_data['date_of_infraction'].dt.year
-# raw_data['month'] = raw_data['date_of_infraction'].dt.month
-# raw_data['day_of_week'] = raw_data['ORDERDATE'].dt.dayofweek
 
 
 # =============================================================================
@@ -59,20 +50,18 @@ raw_data.info()
 # month_of_death
 # day_of_week_of_death
 # manner_of_death
+# sex
+# detail_age
+# race
 #
 # marital_status
-# detail_age_type
-# education_2003_revision
-# marital_status
 # place_of_injury_for_causes_w00_y34_except_y06_and_y07_
-# race
-# sex
 # =============================================================================
 
 
 
-description["manner_of_death"]
-raw_data['detail_age_type']
+description["marital_status"]
+raw_data['race']
 
 
 # =============================================================================
@@ -144,148 +133,16 @@ plt.show()
 
 
 # =============================================================================
-# PART 2 - Death rate by manner_of_death and sex
+# PART 2 - Death rate by manner_of_death and gender
 # =============================================================================
-
-
 
 sns.countplot(x=raw_data['manner_of_death_name'], hue=raw_data['sex'])
 
 
 
-
-
-
-
-
-
-
-
-# Use a color palette from seaborn
-sns.set_palette("pastel")
-
-# Bar plot for Temporal Trends by Day of the Week with sorted day names
-plt.figure(figsize=(12, 6))
-sns.set_style("whitegrid")  # Add grid lines
-df = raw_data.groupby('manner_of_death_name')['sex'].count().sort_index().plot(kind='bar')
-
-# Labels and titles
-plt.title('Death Rate by manner_of_death_name', fontsize=16)
-plt.xlabel('manner_of_death_name', fontsize=14)
-plt.ylabel('Number of Death', fontsize=14)
-
-# Legend
-# plt.legend(['Race'], loc='upper right')
-
-# Data labels
-for index, value in enumerate(raw_data.groupby('manner_of_death_name')['sex'].count().sort_index()):
-    plt.text(index, value + 1, str(value), ha='center', va='bottom')
-
-plt.grid(True)
-plt.show()
-
-
-
-
-
 # =============================================================================
-# PART 2 - Death rate by race
+# PART 3 - Death rate by manner_of_death and age
 # =============================================================================
-
-
-
-
-race_map = {int(key): value for key, value in description["race"].items()}
-raw_data['race_description'] = raw_data['race'].map(race_map)
-
-# Use a color palette from seaborn
-sns.set_palette("pastel")
-
-# Bar plot for Temporal Trends by Day of the Week with sorted day names
-plt.figure(figsize=(12, 6))
-sns.set_style("whitegrid")  # Add grid lines
-df = raw_data.groupby('race_description')['sex'].count().sort_index().plot(kind='bar')
-
-# Labels and titles
-plt.title('Death Rate by Race', fontsize=16)
-plt.xlabel('Race', fontsize=14)
-plt.ylabel('Number of Death', fontsize=14)
-
-# Legend
-# plt.legend(['Race'], loc='upper right')
-
-# Data labels
-for index, value in enumerate(raw_data.groupby('race_description')['sex'].count().sort_index()):
-    plt.text(index, value + 1, str(value), ha='center', va='bottom')
-
-plt.grid(True)
-plt.show()
-
-
-
-
-
-
-
-# Use a color palette from seaborn
-sns.set_palette("viridis")
-
-# Create the first subplot (top)
-plt.figure(figsize=(12, 12))
-
-plt.subplot(2, 1, 1)
-
-# Line plot for Temporal Trends by Months with sorted month names
-sns.lineplot(data=raw_data.groupby('month_name')['SALES'].sum().sort_index(), marker='o', linestyle='-')
-
-# Labels and titles for the first subplot
-plt.title('SALES Over the Months', fontsize=16)
-plt.xlabel('Month', fontsize=14)
-plt.ylabel('SALES', fontsize=14)
-plt.grid(True)
-
-# Data labels for the first subplot
-for index, value in enumerate(raw_data.groupby('month_name')['SALES'].sum().sort_index()):
-    plt.text(index, value + 1, str(value), ha='center', va='bottom')
-
-
-# Graph 2
-# Use a color palette from seaborn
-sns.set_palette("viridis")
-
-# Create the second subplot (bottom)
-plt.subplot(2, 1, 2)
-
-# Line plot for Temporal Trends by Months with sorted month names
-sns.lineplot(data=raw_data.groupby('month_name')['QUANTITYORDERED'].sum().sort_index(), marker='o', linestyle='-')
-
-# Labels and titles for the second subplot
-plt.title('QUANTITY ORDERED Over the Months', fontsize=16)
-plt.xlabel('Month', fontsize=14)
-plt.ylabel('QUANTITY ORDERED', fontsize=14)
-plt.grid(True)
-
-# Data labels for the second subplot
-for index, value in enumerate(raw_data.groupby('month_name')['QUANTITYORDERED'].sum().sort_index()):
-    plt.text(index, value + 1, str(value), ha='center', va='bottom')
-
-# Adjust layout to prevent clipping of titles and labels
-plt.tight_layout()
-
-# Show the plot
-plt.show()
-
-
-
-
-# =============================================================================
-# PART 3
-# =============================================================================
-
-
-# Adjust the number of top descriptions to show (e.g., top 10)
-top_n = 10
-top_descriptions = raw_data['PRODUCTCODE'].value_counts().nlargest(top_n).index
 
 # Use a color palette from seaborn
 sns.set_palette("pastel")
@@ -293,25 +150,24 @@ sns.set_palette("pastel")
 plt.figure(figsize=(12, 6))
 sns.set_style("whitegrid")  # Add grid lines
 
-# Filter data for top PRODUCTCODE
-filtered_data = raw_data[raw_data['PRODUCTCODE'].isin(top_descriptions)]
-
-# Bar plot for sales by Top PRODUCTCODE
-filtered_data.groupby('PRODUCTCODE')['SALES'].sum().plot(kind='bar')
+raw_data.groupby("manner_of_death_name")["detail_age"].mean().plot(kind='bar')
 
 # Labels and titles
-plt.title('SALES by Top PRODUCTCODE', fontsize=16)
-plt.xlabel('PRODUCTCODE', fontsize=14)
-plt.ylabel('SALES', fontsize=14)
+plt.title('Death by manner_of_death and Age', fontsize=16)
+plt.xlabel('manner_of_death', fontsize=14)
+plt.ylabel('Age', fontsize=14)
 
 # Rotate x-axis labels for better readability
 plt.xticks(rotation=45, ha='right')
 
 # Data labels
-for index, value in enumerate(filtered_data.groupby('PRODUCTCODE')['SALES'].sum()):
-    plt.text(index, value + 1, str(value), ha='center', va='bottom')
+for index, value in enumerate(raw_data.groupby('manner_of_death_name')['detail_age'].mean()):
+    plt.text(index, value + 1, str(int(value)), ha='center', va='bottom')
 
 plt.show()
+
+
+
 
 
 # =============================================================================
@@ -328,23 +184,6 @@ plt.figure(figsize=(12, 8))
 sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
 plt.title('Correlation Matrix')
 plt.show()
-
-
-# =============================================================================
-# PART 7
-# =============================================================================
-
-
-
-# Example: Time series plot of parking tickets count by date
-plt.figure(figsize=(16, 8))
-raw_data['ORDERDATE'].value_counts().sort_index().plot(kind='line')
-plt.title('SALES Over Time')
-plt.xlabel('DATE')
-plt.ylabel('SALES')
-plt.show()
-
-
 
 
 
