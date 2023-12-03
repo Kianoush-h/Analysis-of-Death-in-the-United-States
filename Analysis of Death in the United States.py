@@ -52,6 +52,28 @@ raw_data.info()
 # raw_data['month'] = raw_data['date_of_infraction'].dt.month
 # raw_data['day_of_week'] = raw_data['ORDERDATE'].dt.dayofweek
 
+
+# =============================================================================
+# PART 0 - finding interesting columns 
+#
+# manner_of_death
+# marital_status
+# day_of_week_of_death
+# month_of_death
+# detail_age_type
+# education_2003_revision
+# marital_status
+# place_of_injury_for_causes_w00_y34_except_y06_and_y07_
+# race
+# sex
+# =============================================================================
+
+
+
+description["detail_age_type"]
+
+
+
 # =============================================================================
 # Data Visualization
 # =============================================================================
@@ -64,7 +86,6 @@ raw_data.isnull().sum()/len(raw_data)*100
 # =============================================================================
 
 
-description["detail_age_type"]
 
 
 
