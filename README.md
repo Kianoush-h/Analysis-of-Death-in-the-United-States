@@ -12,3 +12,7 @@ As we navigate through this presentation, we'll unravel intricate temporal trend
 ![Image 1](./plots/Death_rate_by_months_and_days.png)
 *A bar plot focusing on the how Deaths fluctuate throughout the months and days of a week*
 
+
+![Image 2](./plots/Death_rate_by_manner_of_death.png)
+*A bar plot focusing on the how Deaths fluctuate throughout the manner_of_death*
+
