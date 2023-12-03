@@ -14,12 +14,15 @@ import pandas as pd
 import os
 import matplotlib.pyplot as plt
 import seaborn as sns
+import json
 
 # Load all CSV files into a list of DataFrames
 file_path = 'data/2014_data.csv'
 
-# encoding = "utf-8"
-encoding = "ISO-8859-1"
+encoding = "utf-8"
+# encoding = "ISO-8859-1"
+f = open('data/2014_codes.json')
+description = json.load(f)
 
 raw_data = pd.read_csv(file_path, encoding = encoding)
 
@@ -41,13 +44,13 @@ raw_data.info()
 
 # raw_data.dropna(inplace=True)
 
-raw_data['ORDERDATE'] = pd.to_datetime(raw_data['ORDERDATE'], infer_datetime_format=True)
+# raw_data['ORDERDATE'] = pd.to_datetime(raw_data['ORDERDATE'], infer_datetime_format=True)
 
 
 
 # raw_data['year'] = raw_data['date_of_infraction'].dt.year
 # raw_data['month'] = raw_data['date_of_infraction'].dt.month
-raw_data['day_of_week'] = raw_data['ORDERDATE'].dt.dayofweek
+# raw_data['day_of_week'] = raw_data['ORDERDATE'].dt.dayofweek
 
 # =============================================================================
 # Data Visualization
@@ -59,6 +62,20 @@ raw_data.isnull().sum()/len(raw_data)*100
 # =============================================================================
 # PART 1 
 # =============================================================================
+
+
+description["detail_age_type"]
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Graph 1
